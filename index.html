@@ -37,33 +37,45 @@
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* ── Custom Cursor ── */
-    #cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: var(--primary);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
-      mix-blend-mode: multiply;
+    /* ── Custom Cursor (desktop/mouse only) ── */
+    #cursor, #cursor-ring { display: none; }
+
+    @media (pointer: fine) {
+      #cursor {
+        display: block;
+        position: fixed;
+        width: 10px; height: 10px;
+        background: var(--primary);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+        mix-blend-mode: multiply;
+        opacity: 0;
+      }
+      #cursor-ring {
+        display: block;
+        position: fixed;
+        width: 36px; height: 36px;
+        border: 1.5px solid rgba(26, 63, 204, 0.4);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+        opacity: 0;
+      }
+      body.cursor-active { cursor: none; }
+      body.cursor-active a, body.cursor-active button { cursor: none; }
+      body.cursor-active #cursor, body.cursor-active #cursor-ring { opacity: 1; }
+      body.cursor-active:has(a:hover) #cursor,
+      body.cursor-active:has(button:hover) #cursor { width: 16px; height: 16px; background: var(--violet); }
+      body.cursor-active:has(a:hover) #cursor-ring,
+      body.cursor-active:has(button:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(124, 58, 237, 0.4); }
     }
-    #cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1.5px solid rgba(26, 63, 204, 0.4);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: transform 0.18s ease, width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
-    }
-    body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 16px; height: 16px; background: var(--violet); }
-    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(124, 58, 237, 0.4); }
 
     /* ── Floating Shapes ── */
     .shapes {
@@ -221,6 +233,59 @@
       font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 600;
       color: var(--text-muted); margin-bottom: 1.5rem;
       opacity: 0; animation: fadeUp 0.6s 0.7s ease forwards;
+      min-height: 2em;
+    }
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px; margin-left: 2px;
+      background: var(--primary);
+      animation: cursorBlink 1s step-end infinite;
+      vertical-align: text-bottom;
+      font-size: 0; /* hide the | char, use background instead */
+      height: 1.1em;
+      border-radius: 1px;
+    }
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ── Tooltips en tech badges ── */
+    .tech-badge {
+      position: relative;
+    }
+    .tech-badge[data-tip]::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 7px);
+      left: 50%; transform: translateX(-50%) translateY(4px);
+      background: var(--text);
+      color: #fff;
+      font-size: 0.7rem; font-weight: 500;
+      white-space: nowrap;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 10;
+    }
+    .tech-badge[data-tip]::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 2px);
+      left: 50%; transform: translateX(-50%) translateY(4px);
+      border: 5px solid transparent;
+      border-top-color: var(--text);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 10;
+    }
+    .tech-badge[data-tip]:hover::after,
+    .tech-badge[data-tip]:hover::before {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
     .hero-desc {
       font-size: 1.05rem; color: var(--text-muted); max-width: 520px;
@@ -241,7 +306,7 @@
       display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.75rem 1.75rem; border-radius: 100px;
       font-size: 0.9rem; font-weight: 600; text-decoration: none;
-      transition: all var(--transition); cursor: none;
+      transition: all var(--transition);
       border: none; font-family: inherit;
     }
     .btn-primary {
@@ -274,21 +339,7 @@
       border-radius: 24px; display: block;
       position: relative; z-index: 1;
     }
-    .hero-scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      color: var(--text-muted); font-size: 0.75rem; font-weight: 500;
-      opacity: 0; animation: fadeUp 0.6s 1.4s ease forwards;
-    }
-    .scroll-line {
-      width: 1px; height: 40px;
-      background: linear-gradient(to bottom, var(--primary), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.1); }
-    }
+
 
     /* ── Projects ── */
     #projects { background: transparent; }
@@ -552,7 +603,7 @@
         <h1 class="hero-name">
           <span class="gradient-text">Theo</span><br>Trosman
         </h1>
-        <p class="hero-role">CEO &amp; Co-Founder at PROMPTOOL · Full Stack Developer</p>
+        <p class="hero-role"><span id="typewriter"></span><span class="typewriter-cursor">|</span></p>
         <p class="hero-desc">
           Construyo productos digitales que combinan lógica, diseño y experiencia de usuario.
           Apasionado por la IA, el emprendimiento y el código limpio que resuelve problemas reales.
@@ -572,10 +623,7 @@
         <img src="theotrosman.png" alt="Foto de Theo Trosman" class="hero-photo" />
       </div>
     </div>
-    <div class="hero-scroll-hint" aria-hidden="true">
-      <div class="scroll-line"></div>
-      <span>scroll</span>
-    </div>
+
   </section>
 
   <!-- ══════════════════════════════════════
@@ -606,11 +654,11 @@
           </div>
           <p class="project-desc">Aplicación que conecta dueños de mascotas con paseadores, veterinarios y peluquerías, centralizando todo el cuidado de las mascotas en un solo lugar. Proyecto académico convertido en startup real.</p>
           <div class="tech-stack">
-            <span class="tech-badge">HTML</span>
-            <span class="tech-badge">C#</span>
-            <span class="tech-badge">ASP.NET MVC</span>
-            <span class="tech-badge">JavaScript</span>
-            <span class="tech-badge">CSS</span>
+            <span class="tech-badge" data-tip="ZOONI">HTML</span>
+            <span class="tech-badge" data-tip="ZOONI">C#</span>
+            <span class="tech-badge" data-tip="ZOONI">ASP.NET MVC</span>
+            <span class="tech-badge" data-tip="ZOONI">JavaScript</span>
+            <span class="tech-badge" data-tip="ZOONI">CSS</span>
           </div>
           <a href="https://github.com/theotrosman/Zooni-Team" target="_blank" rel="noopener noreferrer" class="project-link">
             Ver en GitHub
@@ -631,11 +679,11 @@
           </div>
           <p class="project-desc">Full stack escape room inspirado en el multiverso de Rick y Morty. Una experiencia única con efectos sonoros, visuales, decisiones emocionales y juegos mentales. 6 ⭐ · 1 fork.</p>
           <div class="tech-stack">
-            <span class="tech-badge">C#</span>
-            <span class="tech-badge">ASP.NET MVC</span>
-            <span class="tech-badge">JavaScript</span>
-            <span class="tech-badge">HTML</span>
-            <span class="tech-badge">CSS</span>
+            <span class="tech-badge" data-tip="Rick &amp; Morty Escape Room">C#</span>
+            <span class="tech-badge" data-tip="Rick &amp; Morty Escape Room">ASP.NET MVC</span>
+            <span class="tech-badge" data-tip="Rick &amp; Morty Escape Room">JavaScript</span>
+            <span class="tech-badge" data-tip="Rick &amp; Morty Escape Room">HTML</span>
+            <span class="tech-badge" data-tip="Rick &amp; Morty Escape Room">CSS</span>
           </div>
           <a href="https://github.com/theotrosman/RickAndMortyEscapeRoom" target="_blank" rel="noopener noreferrer" class="project-link">
             Ver en GitHub
@@ -657,10 +705,10 @@
           </div>
           <p class="project-desc">Juego diario inspirado en Wordle donde los usuarios intentan recrear el prompt original de una imagen generada por IA. Reciben un score 0–100 y feedback inteligente con evaluación por Gemini.</p>
           <div class="tech-stack">
-            <span class="tech-badge">React</span>
-            <span class="tech-badge">Vite</span>
-            <span class="tech-badge">TailwindCSS</span>
-            <span class="tech-badge">Gemini API</span>
+            <span class="tech-badge" data-tip="PROMPTOOL">React</span>
+            <span class="tech-badge" data-tip="PROMPTOOL">Vite</span>
+            <span class="tech-badge" data-tip="PROMPTOOL">TailwindCSS</span>
+            <span class="tech-badge" data-tip="PROMPTOOL">Gemini API</span>
           </div>
           <a href="https://github.com/theotrosman/PROMPTOOL" target="_blank" rel="noopener noreferrer" class="project-link">
             Ver en GitHub
@@ -676,7 +724,7 @@
           </div>
           <p class="project-desc">Simulador emergente tipo "Dios" donde múltiples humanos autónomos evolucionan en un mundo dinámico basado en una grilla. Agentes con estados, necesidades y roles. Control de velocidad 1x–100x.</p>
           <div class="tech-stack">
-            <span class="tech-badge">JavaScript</span>
+            <span class="tech-badge" data-tip="KUSOCIETY">JavaScript</span>
           </div>
           <a href="https://github.com/theotrosman/KUSOCIETY" target="_blank" rel="noopener noreferrer" class="project-link">
             Ver en GitHub
@@ -697,8 +745,8 @@
           </div>
           <p class="project-desc">Web app desarrollada en React con arquitectura modular y consumo dinámico de API externa. No solo consulta información, la convierte en experiencia. (Fork)</p>
           <div class="tech-stack">
-            <span class="tech-badge">React</span>
-            <span class="tech-badge">CSS</span>
+            <span class="tech-badge" data-tip="ReactPokedex">React</span>
+            <span class="tech-badge" data-tip="ReactPokedex">CSS</span>
           </div>
           <a href="https://github.com/theotrosman/ReactPokedexEFSI" target="_blank" rel="noopener noreferrer" class="project-link">
             Ver en GitHub
@@ -714,8 +762,8 @@
           </div>
           <p class="project-desc">Landing page de alto impacto para Caltria, enfocada en automatización de procesos para empresas. Diseñada para convertir tráfico en leads mediante una experiencia interactiva con microanimaciones fluidas.</p>
           <div class="tech-stack">
-            <span class="tech-badge">CSS</span>
-            <span class="tech-badge">HTML</span>
+            <span class="tech-badge" data-tip="Caltria Landing">CSS</span>
+            <span class="tech-badge" data-tip="Caltria Landing">HTML</span>
           </div>
           <a href="https://github.com/theotrosman/caltria-landing" target="_blank" rel="noopener noreferrer" class="project-link">
             Ver en GitHub
@@ -874,6 +922,16 @@
           </div>
         </article>
 
+        <article class="rec-card reveal" style="transition-delay:0.2s">
+          <blockquote class="rec-quote">
+            "Desde una temprana edad, Theo demostró una eficiencia y madurez profesional poco comunes. Durante su paso por PROMED, no solo dominó rápidamente las herramientas de automatización e inteligencia artificial que le asignamos, sino que propuso mejoras que terminamos adoptando a nivel organizacional. Tiene una capacidad notable para entender el negocio detrás del código, y eso lo diferencia de la mayoría."
+          </blockquote>
+          <div class="rec-author">
+            <span class="rec-name">Valeria Andrea Almirón</span>
+            <span class="rec-title">Vicepresidente en ProMed SA</span>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -914,34 +972,45 @@
   </footer>
 
   <script>
-    // ── Custom Cursor ──
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursor-ring');
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
+    // ── Custom Cursor (mouse devices only) ──
+    if (window.matchMedia('(pointer: fine)').matches) {
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursor-ring');
+      let mouseX = 0, mouseY = 0;
+      let ringX = 0, ringY = 0;
+      let cursorActive = false;
 
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      cursor.style.left = mouseX + 'px';
-      cursor.style.top = mouseY + 'px';
-    });
+      document.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+        if (!cursorActive) {
+          cursorActive = true;
+          document.body.classList.add('cursor-active');
+        }
+      });
 
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      requestAnimationFrame(animateRing);
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+        ring.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', () => {
+        if (cursorActive) {
+          cursor.style.opacity = '1';
+          ring.style.opacity = '1';
+        }
+      });
     }
-    animateRing();
-
-    // Hide cursor when leaving window
-    document.addEventListener('mouseleave', () => {
-      cursor.style.opacity = '0'; ring.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-      cursor.style.opacity = '1'; ring.style.opacity = '1';
-    });
 
     // ── Hamburger Menu ──
     const hamburger = document.getElementById('hamburger');
@@ -1014,6 +1083,43 @@
     document.querySelectorAll('.skill-chip').forEach((chip, i) => {
       chip.style.transitionDelay = (i * 0.04) + 's';
     });
+    // ── Typewriter effect ──
+    (function() {
+      const el = document.getElementById('typewriter');
+      if (!el) return;
+      const phrases = [
+        'Full Stack Developer',
+        'CEO & Co-Founder',
+        'Builder',
+        'AI Enthusiast',
+        'Problem Solver'
+      ];
+      let phraseIdx = 0, charIdx = 0, deleting = false;
+      const TYPE_SPEED = 70, DELETE_SPEED = 35, PAUSE = 1800;
+
+      function tick() {
+        const current = phrases[phraseIdx];
+        if (!deleting) {
+          charIdx++;
+          el.textContent = current.slice(0, charIdx);
+          if (charIdx === current.length) {
+            deleting = true;
+            setTimeout(tick, PAUSE);
+            return;
+          }
+        } else {
+          charIdx--;
+          el.textContent = current.slice(0, charIdx);
+          if (charIdx === 0) {
+            deleting = false;
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+          }
+        }
+        setTimeout(tick, deleting ? DELETE_SPEED : TYPE_SPEED);
+      }
+      // Start after hero animation delay
+      setTimeout(tick, 900);
+    })();
   </script>
 </body>
 </html>

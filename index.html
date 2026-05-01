@@ -43,10 +43,9 @@
     #cursor, #cursor-ring { display: none; }
 
     @media (pointer: fine) {
-      body.cursor-active,
-      body.cursor-active a,
-      body.cursor-active button {
-        cursor: url('windows-cursor-vector.png') 0 0, auto;
+      body,
+      body * {
+        cursor: url('windows-cursor-vector.png') 0 0, auto !important;
       }
     }
 
@@ -93,11 +92,13 @@
       font-weight: 800; font-size: 1.15rem;
       background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       text-decoration: none; letter-spacing: -0.02em;
+      cursor: pointer;
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
       text-decoration: none; color: var(--text-muted); font-size: 0.875rem; font-weight: 500;
       transition: color var(--transition); position: relative;
+      cursor: pointer;
     }
     .nav-links a::after {
       content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 2px;
@@ -266,8 +267,23 @@
       opacity: 0; animation: fadeUp 0.6s 0.85s ease forwards;
     }
     .hero-ctas {
-      display: flex; gap: 1rem; flex-wrap: wrap;
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
       opacity: 0; animation: fadeUp 0.6s 1s ease forwards;
+    }
+    .hero-ctas .btn {
+      flex: 1 1 auto;
+      min-width: 0;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .hero-ctas {
+        flex-direction: column;
+      }
+      .hero-ctas .btn {
+        width: 100%;
+        flex: none;
+      }
     }
 
     @keyframes fadeUp {
@@ -311,6 +327,13 @@
       width: 100%; aspect-ratio: 4/5; object-fit: cover;
       border-radius: 24px; display: block;
       position: relative; z-index: 1;
+    }
+    #ascii-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border-radius: 24px;
+      pointer-events: none;
+      z-index: 2;
     }
 
 
@@ -472,6 +495,42 @@
     .rec-name { font-size: 0.9rem; font-weight: 700; }
     .rec-title { font-size: 0.78rem; color: var(--primary); font-weight: 500; }
 
+    /* ── Languages ── */
+    .lang-grid {
+      max-width: 640px;
+      margin: 2.5rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .lang-row {
+      display: grid;
+      grid-template-columns: 130px 160px 1fr 44px;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .lang-row:first-child { border-top: 1px solid var(--border); }
+    .lang-name { font-size: 1rem; font-weight: 700; }
+    .lang-cert { font-size: 0.78rem; color: var(--primary); font-weight: 600; }
+    .lang-bar-track {
+      height: 4px; background: var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .lang-bar-fill {
+      height: 100%; border-radius: 10px;
+      background: var(--gradient);
+    }
+    .lang-pct { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-align: right; }
+    @media (max-width: 600px) {
+      .lang-row {
+        grid-template-columns: 110px 1fr 36px;
+        gap: 0.75rem;
+      }
+      .lang-cert { display: none; }
+    }
+
     /* ── Contact ── */
     #contact { text-align: center; }
     .contact-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
@@ -549,6 +608,7 @@
       <li><a href="#education">Educación</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#recommendations">Recomendaciones</a></li>
+      <li><a href="#languages">Idiomas</a></li>
       <li><a href="#contact">Contacto</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
@@ -563,6 +623,7 @@
     <a href="#education" role="menuitem">Educación</a>
     <a href="#skills" role="menuitem">Skills</a>
     <a href="#recommendations" role="menuitem">Recomendaciones</a>
+    <a href="#languages" role="menuitem">Idiomas</a>
     <a href="#contact" role="menuitem">Contacto</a>
   </div>
 
@@ -578,22 +639,26 @@
         </h1>
         <p class="hero-role"><span id="typewriter"></span><span class="typewriter-cursor">|</span></p>
         <p class="hero-desc">
-          Construyo productos digitales que combinan lógica, diseño y experiencia de usuario.
-          Apasionado por la IA, el emprendimiento y el código limpio que resuelve problemas reales.
+          Construyo productos digitales y lidero los equipos que los hacen realidad.
+          Me especializo en traducir ideas en productos concretos, coordinando personas, decisiones técnicas y visión de negocio desde el primer commit hasta el lanzamiento.
         </p>
         <div class="hero-ctas">
           <a href="#projects" class="btn btn-primary">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
             Ver proyectos
           </a>
+          <a href="cv.html" target="_blank" class="btn btn-outline">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Descargar CV
+          </a>
           <a href="mailto:theotrosman@gmail.com" class="btn btn-outline">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Contactar
           </a>
-        </div>
-      </div>
+        </div>      </div>
       <div class="hero-photo-wrap">
-        <img src="theotrosman.png" alt="Foto de Theo Trosman" class="hero-photo" />
+        <img src="theotrosman.png" alt="Foto de Theo Trosman" class="hero-photo" id="hero-photo" />
+        <canvas id="ascii-canvas" aria-hidden="true"></canvas>
       </div>
     </div>
 
@@ -625,7 +690,7 @@
               </span>
             </div>
           </div>
-          <p class="project-desc">Aplicación que conecta dueños de mascotas con paseadores, veterinarios y peluquerías, centralizando todo el cuidado de las mascotas en un solo lugar. Proyecto académico convertido en startup real.</p>
+          <p class="project-desc">Aplicación que conecta dueños de mascotas con paseadores, veterinarios y peluquerías. Lideré un equipo de desarrollo de punta a punta: definí la arquitectura, distribuí tareas, resolví bloqueos y mantuve el foco del equipo en entregar valor. Proyecto académico convertido en startup real con contacto a inversores.</p>
           <div class="tech-stack">
             <span class="tech-badge" data-tip="ZOONI">HTML</span>
             <span class="tech-badge" data-tip="ZOONI">C#</span>
@@ -650,7 +715,7 @@
               </span>
             </div>
           </div>
-          <p class="project-desc">Full stack escape room inspirado en el multiverso de Rick y Morty. Una experiencia única con efectos sonoros, visuales, decisiones emocionales y juegos mentales. 6 ⭐ · 1 fork.</p>
+          <p class="project-desc">Full stack escape room inspirado en el multiverso de Rick y Morty. Una experiencia única con efectos sonoros, visuales, decisiones emocionales y juegos mentales.</p>
           <div class="tech-stack">
             <span class="tech-badge" data-tip="Rick &amp; Morty Escape Room">C#</span>
             <span class="tech-badge" data-tip="Rick &amp; Morty Escape Room">ASP.NET MVC</span>
@@ -666,7 +731,7 @@
 
         <!-- PROMPTOOL -->
         <article class="project-card reveal" style="transition-delay:0.15s">
-          <div class="project-role-tag">CEO &amp; Co-Founder</div>
+          <div class="project-role-tag">CEO &amp; Co-Founder · Team Lead</div>
           <div class="project-header">
             <h3 class="project-name">PROMPTOOL</h3>
             <div class="project-meta">
@@ -765,7 +830,7 @@
             <p class="timeline-company">ZOONI · Internship</p>
             <h3 class="timeline-role">Project Leader &amp; Full Stack Developer</h3>
             <p class="timeline-period">Jul 2025 – Presente · 11 meses · Argentina · Híbrido</p>
-            <p class="timeline-desc">Plataforma digital que centraliza la gestión del cuidado de mascotas. Lideré el equipo, coordiné el desarrollo frontend y backend con C#, JavaScript, HTML y CSS bajo arquitectura MVC construida desde cero. Contacté inversores potenciales y ayudé a mover el proyecto hacia validación. En expansión hacia app móvil.</p>
+            <p class="timeline-desc">Lideré el equipo completo de desarrollo: asigné roles, coordiné sprints, tomé decisiones de arquitectura y mantuve la visión del producto alineada entre todos los integrantes. Construimos frontend y backend con C#, JavaScript y CSS bajo arquitectura MVC desde cero. Gestioné el contacto con inversores potenciales y llevé el proyecto hacia validación real. En expansión hacia app móvil.</p>
           </div>
           <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-spacer"></div>
@@ -830,6 +895,11 @@
         <h2 class="section-title">Mi <span class="gradient-text">stack</span></h2>
       </div>
       <div class="skills-grid" role="list" aria-label="Tecnologías y habilidades">
+        <span class="skill-chip" role="listitem">Liderazgo de equipos</span>
+        <span class="skill-chip" role="listitem">Gestión de proyectos</span>
+        <span class="skill-chip" role="listitem">Toma de decisiones</span>
+        <span class="skill-chip" role="listitem">Coordinación de sprints</span>
+        <span class="skill-chip" role="listitem">Emprendimiento</span>
         <span class="skill-chip" role="listitem">JavaScript</span>
         <span class="skill-chip" role="listitem">React</span>
         <span class="skill-chip" role="listitem">C#</span>
@@ -845,10 +915,8 @@
         <span class="skill-chip" role="listitem">SQL</span>
         <span class="skill-chip" role="listitem">UX / UI Design</span>
         <span class="skill-chip" role="listitem">Automatización con IA</span>
-        <span class="skill-chip" role="listitem">Liderazgo de equipos</span>
         <span class="skill-chip" role="listitem">Arquitectura MVC</span>
         <span class="skill-chip" role="listitem">Análisis de datos</span>
-        <span class="skill-chip" role="listitem">Emprendimiento</span>
         <span class="skill-chip" role="listitem">Resolución de problemas</span>
       </div>
     </div>
@@ -910,6 +978,49 @@
   </section>
 
   <!-- ══════════════════════════════════════
+       LANGUAGES
+  ══════════════════════════════════════ -->
+  <section id="languages" class="section-pad" aria-label="Idiomas">
+    <div class="container" style="text-align:center;">
+      <div class="reveal">
+        <p class="section-label">Idiomas</p>
+        <h2 class="section-title">Con quién puedo <span class="gradient-text">comunicarme</span></h2>
+      </div>
+      <div class="lang-grid reveal">
+
+        <div class="lang-row">
+          <span class="lang-name">Español</span>
+          <span class="lang-cert">Lengua materna</span>
+          <div class="lang-bar-track"><div class="lang-bar-fill" style="width:100%"></div></div>
+          <span class="lang-pct">Nativo</span>
+        </div>
+
+        <div class="lang-row">
+          <span class="lang-name">Inglés</span>
+          <span class="lang-cert">CAE — C1 Advanced</span>
+          <div class="lang-bar-track"><div class="lang-bar-fill" style="width:88%"></div></div>
+          <span class="lang-pct">C1</span>
+        </div>
+
+        <div class="lang-row">
+          <span class="lang-name">Portugués</span>
+          <span class="lang-cert">Conversacional</span>
+          <div class="lang-bar-track"><div class="lang-bar-fill" style="width:45%"></div></div>
+          <span class="lang-pct">B1</span>
+        </div>
+
+        <div class="lang-row">
+          <span class="lang-name">Hebreo</span>
+          <span class="lang-cert">Lectura básica</span>
+          <div class="lang-bar-track"><div class="lang-bar-fill" style="width:15%"></div></div>
+          <span class="lang-pct">A1</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
        CONTACT
   ══════════════════════════════════════ -->
   <section id="contact" class="section-pad" aria-label="Contacto">
@@ -946,11 +1057,7 @@
 
   <script>
     // ── Custom Cursor (image) ──
-    if (window.matchMedia('(pointer: fine)').matches) {
-      document.addEventListener('mousemove', () => {
-        document.body.classList.add('cursor-active');
-      }, { once: true });
-    }
+    // Applied via CSS globally — no JS needed
 
     // ── Hamburger Menu ──
     const hamburger = document.getElementById('hamburger');
@@ -1029,10 +1136,10 @@
       if (!el) return;
       const phrases = [
         'Full Stack Developer',
+        'Team Lead & Project Manager',
         'CEO & Co-Founder',
         'Builder',
-        'AI Enthusiast',
-        'Problem Solver'
+        'AI Enthusiast'
       ];
       let phraseIdx = 0, charIdx = 0, deleting = false;
       const TYPE_SPEED = 70, DELETE_SPEED = 35, PAUSE = 1800;
@@ -1059,6 +1166,177 @@
       }
       // Start after hero animation delay
       setTimeout(tick, 900);
+    })();
+    // ── ASCII Scramble on photo hover ──
+    (function() {
+      const img = document.getElementById('hero-photo');
+      const canvas = document.getElementById('ascii-canvas');
+      if (!img || !canvas) return;
+
+      const CHARS = '@#S%?*+;:,. ';
+      const CELL = 11;
+      const RADIUS = 80;
+      const DECAY = 0.045;
+      const SCRAMBLE_SPEED = 80;
+
+      const ctx = canvas.getContext('2d');
+
+      let cols, rows, cells;
+      let mouseX = -9999, mouseY = -9999;
+      let raf = null;
+      let ready = false;
+
+      function sampleColors(rW, rH) {
+        // Try drawing into an offscreen canvas to read pixel data
+        const offscreen = document.createElement('canvas');
+        offscreen.width  = rW;
+        offscreen.height = rH;
+        const octx = offscreen.getContext('2d', { willReadFrequently: true });
+
+        // crossOrigin must be set BEFORE src — clone the img with crossOrigin
+        const probe = new Image();
+        probe.crossOrigin = 'anonymous';
+
+        return new Promise((resolve) => {
+          probe.onload = () => {
+            try {
+              octx.drawImage(probe, 0, 0, rW, rH);
+              resolve(octx.getImageData(0, 0, rW, rH));
+            } catch(e) {
+              resolve(null);
+            }
+          };
+          probe.onerror = () => resolve(null);
+          // Use the already-loaded src — works for same-origin / local files
+          probe.src = img.currentSrc || img.src;
+        });
+      }
+
+      async function init() {
+        const rect = img.getBoundingClientRect();
+        const rW = Math.round(rect.width)  || img.offsetWidth;
+        const rH = Math.round(rect.height) || img.offsetHeight;
+        if (!rW || !rH) return;
+
+        canvas.width  = rW;
+        canvas.height = rH;
+
+        cols = Math.ceil(rW / CELL);
+        rows = Math.ceil(rH / CELL);
+        cells = [];
+
+        const imgData = await sampleColors(rW, rH);
+
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols; col++) {
+            let r = 160, g = 140, b = 120;
+
+            if (imgData) {
+              const px = col * CELL, py = row * CELL;
+              let rr=0, gg=0, bb=0, n=0;
+              for (let dy = 0; dy < CELL && py+dy < rH; dy++) {
+                for (let dx = 0; dx < CELL && px+dx < rW; dx++) {
+                  const i = ((py+dy)*rW + (px+dx)) * 4;
+                  rr += imgData.data[i];
+                  gg += imgData.data[i+1];
+                  bb += imgData.data[i+2];
+                  n++;
+                }
+              }
+              if (n) { r = rr/n; g = gg/n; b = bb/n; }
+            }
+
+            const bright = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+            const baseCharIdx = Math.floor((1 - bright) * (CHARS.length - 1));
+            cells.push({ v: 0, r, g, b, baseCharIdx, charIdx: baseCharIdx, lastScramble: 0 });
+          }
+        }
+        ready = true;
+      }
+
+      function draw(ts) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = `bold ${CELL}px monospace`;
+        ctx.textBaseline = 'top';
+        for (let i = 0; i < cells.length; i++) {
+          const c = cells[i];
+          if (c.v < 0.015) continue;
+
+          if (c.v > 0.1 && ts - c.lastScramble > SCRAMBLE_SPEED) {
+            c.charIdx = Math.random() < c.v
+              ? Math.floor(Math.random() * CHARS.length)
+              : c.baseCharIdx;
+            c.lastScramble = ts;
+          }
+
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+          ctx.globalAlpha = c.v;
+          ctx.fillStyle = `rgb(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)})`;
+          ctx.fillText(CHARS[c.charIdx] || ' ', col * CELL, row * CELL);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function loop(ts) {
+        let anyActive = false;
+        for (let i = 0; i < cells.length; i++) {
+          const c = cells[i];
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+          const cx = col * CELL + CELL / 2;
+          const cy = row * CELL + CELL / 2;
+          const dist = Math.hypot(cx - mouseX, cy - mouseY);
+          if (dist < RADIUS) {
+            const strength = (1 - dist / RADIUS) * (0.5 + Math.random() * 0.5);
+            c.v = Math.min(1, c.v + strength * 0.4);
+          }
+          if (c.v > 0) {
+            c.v = Math.max(0, c.v - DECAY);
+            anyActive = true;
+          }
+        }
+        draw(ts);
+        if (anyActive || mouseX > -100) {
+          raf = requestAnimationFrame(loop);
+        } else {
+          raf = null;
+        }
+      }
+
+      function startLoop() {
+        if (!raf && ready) raf = requestAnimationFrame(loop);
+      }
+
+      const wrap = img.parentElement;
+      wrap.addEventListener('mousemove', e => {
+        if (!ready) return;
+        const rect = canvas.getBoundingClientRect();
+        mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
+        mouseY = (e.clientY - rect.top)  * (canvas.height / rect.height);
+        startLoop();
+      });
+      wrap.addEventListener('mouseleave', () => {
+        mouseX = -9999; mouseY = -9999;
+      });
+
+      function tryInit() {
+        if (img.complete && img.naturalWidth > 0) {
+          init();
+        } else {
+          img.addEventListener('load', () => init(), { once: true });
+        }
+      }
+
+      if (document.readyState === 'complete') {
+        tryInit();
+      } else {
+        window.addEventListener('load', tryInit, { once: true });
+      }
+
+      window.addEventListener('resize', () => {
+        if (ready) { ready = false; init(); }
+      });
     })();
   </script>
 </body>

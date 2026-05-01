@@ -49,6 +49,17 @@
       }
     }
 
+    /* Prevent text-selection cursor on interactive elements */
+    a, button, label, [role="button"],
+    .nav-logo, .nav-links a, .hamburger,
+    .btn, .contact-btn, .project-link,
+    .skill-chip, .lang-row, .rec-card,
+    .project-card, .timeline-content,
+    .edu-card, .lang-card {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
     /* ── Floating Shapes ── */
     .shapes {
       position: fixed; inset: 0;

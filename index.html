@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Theo Trosman — CEO & Full Stack Developer</title>
   <meta name="description" content="Theo Trosman — CEO & Co-Founder at PROMPTOOL, Full Stack Developer. Portfolio personal." />
+  <link rel="icon" type="image/png" href="windows-cursor-vector.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
 
     :root {
       --bg: #f0ece3;
@@ -37,6 +38,8 @@
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     /* ── Custom Cursor (desktop/mouse only) ── */
@@ -1067,8 +1070,26 @@
   </footer>
 
   <script>
-    // ── Custom Cursor (image) ──
-    // Applied via CSS globally — no JS needed
+    // ── Dynamic title ──
+    (function() {
+      const frames = [
+        'Theo Trosman',
+        '< Full Stack Dev />',
+        'CEO @ PROMPTOOL',
+        '{ builder: true }',
+        'Team Lead ⚡',
+        'Theo Trosman',
+        '> git push origin main',
+        'Available for hire',
+        '// let\'s build something',
+        'Theo Trosman',
+      ];
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % frames.length;
+        document.title = frames[i];
+      }, 2200);
+    })();
 
     // ── Hamburger Menu ──
     const hamburger = document.getElementById('hamburger');

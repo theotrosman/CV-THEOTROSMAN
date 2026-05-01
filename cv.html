@@ -3,465 +3,345 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theo Trosman — Full Stack Developer</title>
+<title>Theo Trosman — CV</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d0d1a;
+  --blue:#1a3fcc;
+  --violet:#7c3aed;
+  --muted:#6b6b8a;
+  --light:#f0eff8;
+  --border:#e4e2f0;
+  --grad:linear-gradient(135deg,#1a3fcc,#7c3aed);
+}
+html{font-size:10pt}
+body{
+  font-family:'Inter',sans-serif;
+  background:#dddbe8;
+  color:var(--ink);
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+  user-select:none;
+}
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #e8e6f0;
-    color: #3a3a5a;
-    font-size: 0.78rem;
-    line-height: 1.55;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+/* ── PRINT BAR ── */
+.pbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:8px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-size:0.7rem;color:var(--muted);
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+}
+.pbar kbd{
+  background:var(--light);border:1px solid var(--border);
+  border-radius:4px;padding:1px 6px;font-family:inherit;font-size:0.65rem;color:var(--ink);
+}
+.pbtn{
+  background:var(--grad);color:#fff;border:none;border-radius:6px;
+  padding:6px 16px;font-family:inherit;font-size:0.7rem;font-weight:600;
+  cursor:pointer;letter-spacing:0.03em;transition:opacity .15s;
+}
+.pbtn:hover{opacity:.85}
 
-  /* ── Print bar ── */
-  .print-bar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: #fff;
-    border-bottom: 1px solid #e8e6f0;
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    font-size: 0.72rem;
-    color: #6b6b8a;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .print-bar .instructions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-  .print-bar .instructions span { display: flex; align-items: center; gap: 5px; }
-  .print-bar kbd {
-    background: #f0eff8;
-    border: 1px solid #d4d2e8;
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-family: inherit;
-    font-size: 0.68rem;
-    color: #3a3a5a;
-  }
-  .print-btn {
-    background: linear-gradient(135deg, #1a3fcc, #7c3aed);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 7px 18px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    letter-spacing: 0.02em;
-    transition: opacity 0.15s;
-  }
-  .print-btn:hover { opacity: 0.88; }
+/* ── PAGE ── */
+.wrap{margin-top:48px;display:flex;justify-content:center;padding:20px 16px 40px}
+.cv{
+  width:210mm;min-height:297mm;
+  background:#fff;
+  box-shadow:0 8px 60px rgba(13,13,26,.22);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
 
-  /* ── Page wrapper ── */
-  .page-wrap {
-    margin-top: 52px;
-    display: flex;
-    justify-content: center;
-    padding: 24px 16px 40px;
-  }
+/* ══════════════════════════════
+   HEADER — full bleed, dramatic
+══════════════════════════════ */
+.cv-head{
+  background:var(--ink);
+  padding:0;
+  display:grid;
+  grid-template-columns:1fr auto;
+  position:relative;
+  overflow:hidden;
+}
+/* Subtle grid texture */
+.cv-head::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:24px 24px;
+  pointer-events:none;
+}
+/* Blue accent bar left */
+.cv-head::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:var(--grad);
+}
+.head-left{padding:32px 36px 28px 44px;position:relative;z-index:1}
+.head-right{
+  padding:32px 36px 28px 0;
+  display:flex;align-items:flex-start;justify-content:flex-end;
+  position:relative;z-index:1;
+}
+.head-photo{
+  width:80px;height:80px;border-radius:12px;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,.15);
+  display:block;
+}
 
-  .cv {
-    width: 210mm;
-    min-height: 297mm;
-    background: #fff;
-    box-shadow: 0 4px 40px rgba(15,23,41,0.18);
-    overflow: hidden;
-  }
+.head-name{
+  font-size:38pt;font-weight:900;
+  color:#fff;letter-spacing:-0.045em;line-height:.9;
+  margin-bottom:10px;
+}
+.head-name span{
+  background:var(--grad);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+}
+.head-role{
+  font-size:0.78rem;font-weight:400;
+  color:rgba(255,255,255,.55);
+  margin-bottom:14px;letter-spacing:.01em;
+}
+.head-role strong{color:rgba(255,255,255,.85);font-weight:600}
+.head-contact{
+  display:flex;flex-wrap:wrap;gap:0;
+  font-size:0.65rem;color:rgba(255,255,255,.4);
+  align-items:center;
+}
+.head-contact a{color:rgba(255,255,255,.65);text-decoration:none}
+.head-contact a:hover{color:#fff}
+.head-contact .dot{margin:0 7px;color:rgba(255,255,255,.2)}
 
-  /* ── Header ── */
-  .cv-header {
-    background: #0f1729;
-    padding: 36px 44px 30px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-  .header-photo {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(255,255,255,0.18);
-    flex-shrink: 0;
-  }
-  .header-text { flex: 1; }
-  .header-name {
-    font-size: 42pt;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: -0.04em;
-    line-height: 0.92;
-    margin-bottom: 7px;
-  }
-  .header-role {
-    font-size: 0.82rem;
-    font-weight: 400;
-    color: rgba(255,255,255,0.62);
-    letter-spacing: 0.01em;
-    margin-bottom: 11px;
-  }
-  .header-role strong {
-    color: rgba(255,255,255,0.88);
-    font-weight: 600;
-  }
-  .header-contact {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 0;
-    font-size: 0.68rem;
-    color: rgba(255,255,255,0.5);
-    align-items: center;
-  }
-  .header-contact a {
-    color: rgba(255,255,255,0.72);
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-  .header-contact a:hover { color: #fff; }
-  .header-contact .sep {
-    margin: 0 8px;
-    color: rgba(255,255,255,0.22);
-  }
+/* ══════════════════════════════
+   TAGLINE STRIP
+══════════════════════════════ */
+.tagline-strip{
+  background:var(--blue);
+  padding:9px 44px;
+  font-size:0.68rem;font-weight:600;
+  color:rgba(255,255,255,.75);
+  letter-spacing:.08em;text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;
+}
+.tagline-strip::before{
+  content:'';display:block;width:20px;height:1px;
+  background:rgba(255,255,255,.4);flex-shrink:0;
+}
 
-  /* ── Body columns ── */
-  .cv-body {
-    display: grid;
-    grid-template-columns: 62% 38%;
-    min-height: calc(297mm - 148px);
-  }
+/* ══════════════════════════════
+   BODY
+══════════════════════════════ */
+.cv-body{
+  display:grid;
+  grid-template-columns:62% 38%;
+  flex:1;
+}
+.cv-main{
+  padding:28px 32px 28px 44px;
+  border-right:1px solid var(--border);
+}
+.cv-side{
+  background:#f8f7f3;
+  padding:28px 28px 28px 24px;
+}
 
-  .cv-main {
-    padding: 30px 36px 30px 44px;
-    border-right: 1px solid #e8e6f0;
-  }
+/* ── SECTION ── */
+.sec{margin-bottom:20px}
+.sec:last-child{margin-bottom:0}
+.sec-title{
+  font-size:0.58rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blue);
+  padding-bottom:5px;margin-bottom:10px;
+  border-bottom:1.5px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.sec-title::before{
+  content:'';display:block;width:16px;height:2px;
+  background:var(--grad);border-radius:2px;flex-shrink:0;
+}
 
-  .cv-sidebar {
-    background: #f7f6f2;
-    padding: 30px 28px 30px 28px;
-  }
+/* ── PERFIL ── */
+.perfil{
+  font-size:0.76rem;color:#3a3a5a;line-height:1.65;
+  border-left:2px solid var(--border);
+  padding-left:12px;
+}
+.perfil strong{color:var(--ink);font-weight:600}
 
-  /* ── Section ── */
-  .section { margin-bottom: 22px; }
-  .section:last-child { margin-bottom: 0; }
+/* ── EXP ── */
+.exp{margin-bottom:13px}
+.exp:last-child{margin-bottom:0}
+.exp-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:1px}
+.exp-role{font-size:0.77rem;font-weight:700;color:var(--ink)}
+.exp-date{font-size:0.62rem;color:var(--muted);white-space:nowrap;font-weight:400}
+.exp-co{
+  font-size:0.68rem;color:var(--muted);font-weight:500;
+  margin-bottom:5px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+}
+.badge{
+  font-size:0.56rem;font-weight:600;color:var(--muted);
+  background:var(--light);border-radius:3px;
+  padding:1px 5px;letter-spacing:.03em;
+}
+.exp-list{list-style:none;padding:0}
+.exp-list li{
+  font-size:0.72rem;color:#3a3a5a;
+  padding-left:12px;position:relative;
+  margin-bottom:2px;line-height:1.5;
+}
+.exp-list li::before{content:'→';position:absolute;left:0;color:var(--blue);font-size:.6rem;top:.1em}
 
-  .section-title {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #1a3fcc;
-    margin-bottom: 8px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #e8e6f0;
-  }
+/* ── PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.proj{
+  border:1px solid var(--border);border-radius:6px;
+  padding:9px 11px;background:#fafafa;
+  position:relative;overflow:hidden;
+}
+.proj::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--grad);opacity:0;transition:opacity .2s;
+}
+.proj:hover::before{opacity:1}
+.proj-name{font-size:0.73rem;font-weight:700;color:var(--ink);margin-bottom:1px}
+.proj-role{font-size:0.6rem;color:var(--violet);font-weight:600;margin-bottom:4px;letter-spacing:.02em}
+.proj-desc{font-size:0.67rem;color:#5a5a7a;line-height:1.45;margin-bottom:5px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:3px}
+.tag{
+  font-size:0.57rem;font-weight:600;
+  color:var(--blue);background:#eef1fc;
+  border-radius:3px;padding:1px 5px;letter-spacing:.02em;
+}
 
-  /* ── Perfil ── */
-  .perfil-text {
-    font-size: 0.78rem;
-    color: #3a3a5a;
-    line-height: 1.6;
-    font-weight: 400;
-  }
+/* ── EDU ── */
+.edu{display:flex;gap:10px;align-items:flex-start}
+.edu-logo{width:30px;height:30px;object-fit:contain;flex-shrink:0;border-radius:4px;margin-top:1px}
+.edu-school{font-size:0.77rem;font-weight:700;color:var(--ink)}
+.edu-deg{font-size:0.68rem;color:var(--muted);font-weight:500;margin-bottom:1px}
+.edu-yr{font-size:0.62rem;color:#aaa}
+.edu-note{font-size:0.67rem;color:#5a5a7a;margin-top:3px;line-height:1.45}
 
-  /* ── Experiencia ── */
-  .exp-item { margin-bottom: 14px; }
-  .exp-item:last-child { margin-bottom: 0; }
+/* ── SIDEBAR ── */
+.side-sec{margin-bottom:18px}
+.side-sec:last-child{margin-bottom:0}
+.side-title{
+  font-size:0.58rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blue);
+  padding-bottom:5px;margin-bottom:9px;
+  border-bottom:1.5px solid var(--border);
+}
 
-  .exp-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 1px;
-  }
-  .exp-title {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #1a1a2e;
-  }
-  .exp-date {
-    font-size: 0.64rem;
-    color: #9090aa;
-    white-space: nowrap;
-    font-weight: 400;
-  }
-  .exp-company {
-    font-size: 0.7rem;
-    color: #6b6b8a;
-    margin-bottom: 5px;
-    font-weight: 500;
-  }
-  .exp-company .badge {
-    display: inline-block;
-    font-size: 0.58rem;
-    font-weight: 600;
-    color: #9090aa;
-    background: #f0eff8;
-    border-radius: 3px;
-    padding: 1px 5px;
-    margin-left: 5px;
-    letter-spacing: 0.03em;
-    vertical-align: middle;
-  }
-  .exp-bullets {
-    list-style: none;
-    padding: 0;
-  }
-  .exp-bullets li {
-    font-size: 0.74rem;
-    color: #3a3a5a;
-    padding-left: 10px;
-    position: relative;
-    margin-bottom: 2px;
-    line-height: 1.5;
-  }
-  .exp-bullets li::before {
-    content: '–';
-    position: absolute;
-    left: 0;
-    color: #c0bfd8;
-  }
+/* Skills */
+.skill-list{list-style:none;padding:0}
+.skill-list li{
+  font-size:0.72rem;color:#3a3a5a;
+  padding:3px 0 3px 10px;
+  border-left:2px solid transparent;
+  line-height:1.4;
+}
+.skill-list li.hi{
+  border-left-color:var(--blue);
+  font-weight:600;color:var(--ink);
+}
 
-  /* ── Proyectos grid ── */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .project-card {
-    border: 1px solid #e8e6f0;
-    border-radius: 6px;
-    padding: 10px 12px;
-    background: #fafafa;
-  }
-  .project-name {
-    font-size: 0.74rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    margin-bottom: 1px;
-  }
-  .project-role {
-    font-size: 0.62rem;
-    color: #7c3aed;
-    font-weight: 600;
-    margin-bottom: 4px;
-    letter-spacing: 0.02em;
-  }
-  .project-desc {
-    font-size: 0.68rem;
-    color: #5a5a7a;
-    line-height: 1.45;
-    margin-bottom: 6px;
-  }
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px;
-  }
-  .tag {
-    font-size: 0.58rem;
-    font-weight: 600;
-    color: #1a3fcc;
-    background: #eef1fc;
-    border-radius: 3px;
-    padding: 1px 5px;
-    letter-spacing: 0.02em;
-  }
+/* Tech */
+.tech-line{font-size:0.7rem;color:#3a3a5a;line-height:1.55}
+.tech-line strong{color:var(--ink);font-weight:600}
 
-  /* ── Educación ── */
-  .edu-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .edu-logo {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    flex-shrink: 0;
-    margin-top: 2px;
-    border-radius: 4px;
-  }
-  .edu-school {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #1a1a2e;
-  }
-  .edu-degree {
-    font-size: 0.7rem;
-    color: #6b6b8a;
-    font-weight: 500;
-    margin-bottom: 2px;
-  }
-  .edu-years {
-    font-size: 0.64rem;
-    color: #9090aa;
-  }
-  .edu-note {
-    font-size: 0.68rem;
-    color: #5a5a7a;
-    margin-top: 3px;
-    line-height: 1.45;
-  }
+/* Lang */
+.lang{margin-bottom:8px}
+.lang:last-child{margin-bottom:0}
+.lang-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.lang-name{font-size:0.72rem;font-weight:600;color:var(--ink)}
+.lang-lv{font-size:0.6rem;color:#aaa}
+.lang-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.lang-fill{height:100%;background:var(--grad);border-radius:2px}
 
-  /* ── Sidebar sections ── */
-  .sidebar-section { margin-bottom: 20px; }
-  .sidebar-section:last-child { margin-bottom: 0; }
-
-  .sidebar-title {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #1a3fcc;
-    margin-bottom: 8px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #e8e6f0;
-  }
-
-  /* Liderazgo */
-  .skill-list { list-style: none; padding: 0; }
-  .skill-list li {
-    font-size: 0.74rem;
-    color: #3a3a5a;
-    padding: 3px 0 3px 10px;
-    border-left: 2px solid transparent;
-    line-height: 1.4;
-  }
-  .skill-list li.highlight {
-    border-left-color: #1a3fcc;
-    font-weight: 600;
-    color: #1a1a2e;
-  }
-
-  /* Tecnologías */
-  .tech-group { margin-bottom: 7px; }
-  .tech-group:last-child { margin-bottom: 0; }
-  .tech-line {
-    font-size: 0.72rem;
-    color: #3a3a5a;
-    line-height: 1.5;
-  }
-  .tech-line strong {
-    color: #1a1a2e;
-    font-weight: 600;
-  }
-
-  /* Idiomas */
-  .lang-item { margin-bottom: 8px; }
-  .lang-item:last-child { margin-bottom: 0; }
-  .lang-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 3px;
-  }
-  .lang-name {
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: #1a1a2e;
-  }
-  .lang-level {
-    font-size: 0.62rem;
-    color: #9090aa;
-    font-weight: 400;
-  }
-  .lang-bar {
-    height: 3px;
-    background: #e8e6f0;
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .lang-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #1a3fcc, #7c3aed);
-    border-radius: 2px;
-  }
-
-  /* ── Print ── */
-  @media print {
-    .print-bar { display: none !important; }
-    .page-wrap { margin-top: 0; padding: 0; background: none; }
-    body { background: white; font-size: 9pt; }
-    .cv { box-shadow: none; width: 210mm; min-height: 297mm; }
-    .cv-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .cv-sidebar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .project-card { background: #fafafa !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .tag { background: #eef1fc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .skill-list li.highlight { border-left-color: #1a3fcc !important; }
-    .lang-fill { background: linear-gradient(90deg, #1a3fcc, #7c3aed) !important; }
-    @page { size: A4; margin: 0; }
-  }
+/* ── PRINT ── */
+@media print{
+  .pbar{display:none!important}
+  .wrap{margin-top:0;padding:0;background:none}
+  body{background:#fff;font-size:9.5pt}
+  .cv{box-shadow:none;width:210mm;min-height:297mm}
+  .cv-head,.tagline-strip,.cv-side{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .proj{background:#fafafa!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tag{background:#eef1fc!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .skill-list li.hi{border-left-color:var(--blue)!important}
+  .lang-fill{background:var(--grad)!important}
+  @page{size:A4;margin:0}
+}
 </style>
 </head>
 <body>
 
-<!-- Print bar -->
-<div class="print-bar">
-  <div class="instructions">
-    <span>Para guardar como PDF:</span>
-    <span><kbd>⌘P</kbd> Mac &nbsp;/&nbsp; <kbd>Ctrl+P</kbd> Win → Guardar como PDF</span>
+<div class="pbar">
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:.7rem">
+    <span>Guardar como PDF:</span>
+    <span><kbd>⌘P</kbd> Mac &nbsp;/&nbsp; <kbd>Ctrl+P</kbd> Win &nbsp;→&nbsp; Destino: <strong>Guardar como PDF</strong></span>
     <span>· Escala <strong>100%</strong> · Márgenes <strong>Ninguno</strong></span>
   </div>
-  <button class="print-btn" onclick="window.print()">Abrir diálogo PDF</button>
+  <button class="pbtn" onclick="window.print()">Abrir diálogo PDF</button>
 </div>
 
-<!-- CV -->
-<div class="page-wrap">
+<div class="wrap">
 <div class="cv">
 
-  <!-- Header -->
-  <header class="cv-header">
-    <img src="theotrosman.png" alt="Theo Trosman" class="header-photo">
-    <div class="header-text">
-      <div class="header-name">THEO TROSMAN</div>
-      <div class="header-role">Full Stack Developer &nbsp;·&nbsp; <strong>CEO &amp; Co-Founder at PROMPTOOL</strong></div>
-      <div class="header-contact">
+  <!-- ── HEADER ── -->
+  <header class="cv-head">
+    <div class="head-left">
+      <div class="head-name">THEO<br><span>TROSMAN</span></div>
+      <div class="head-role">Full Stack Developer &nbsp;·&nbsp; <strong>CEO &amp; Co-Founder at PROMPTOOL</strong></div>
+      <div class="head-contact">
         <a href="mailto:theotrosman@gmail.com">theotrosman@gmail.com</a>
-        <span class="sep">·</span>
-        <a href="https://github.com/theotrosman" target="_blank">github.com/theotrosman</a>
-        <span class="sep">·</span>
-        <a href="https://linkedin.com/in/theotrosman" target="_blank">linkedin.com/in/theotrosman</a>
-        <span class="sep">·</span>
+        <span class="dot">·</span>
+        <a href="https://github.com/theotrosman">github.com/theotrosman</a>
+        <span class="dot">·</span>
+        <a href="https://linkedin.com/in/theotrosman">linkedin.com/in/theotrosman</a>
+        <span class="dot">·</span>
         <span>Buenos Aires, Argentina</span>
       </div>
     </div>
+    <div class="head-right">
+      <img src="theotrosman.png" alt="Theo Trosman" class="head-photo">
+    </div>
   </header>
 
-  <!-- Body -->
+  <!-- ── TAGLINE ── -->
+  <div class="tagline-strip">
+    Construyo productos · Lidero equipos · Entrego resultados
+  </div>
+
+  <!-- ── BODY ── -->
   <div class="cv-body">
 
-    <!-- Main column -->
+    <!-- MAIN -->
     <main class="cv-main">
 
-      <!-- Perfil -->
-      <section class="section">
-        <div class="section-title">Perfil</div>
-        <p class="perfil-text">Desarrollador Full Stack y líder de proyectos con +2 años de experiencia en entornos reales. Fundé PROMPTOOL, plataforma de IA con modelo B2B/B2C. Combino visión de negocio con ejecución técnica: coordino equipos, tomo decisiones de arquitectura y entrego software que resuelve problemas concretos.</p>
+      <section class="sec">
+        <div class="sec-title">Perfil</div>
+        <p class="perfil">Desarrollador Full Stack y líder de proyectos con <strong>+2 años de experiencia en entornos reales</strong>. Fundé <strong>PROMPTOOL</strong>, plataforma de IA con modelo B2B/B2C. Combino visión de negocio con ejecución técnica: coordino equipos, tomo decisiones de arquitectura y entrego software que resuelve problemas concretos.</p>
       </section>
 
-      <!-- Experiencia -->
-      <section class="section">
-        <div class="section-title">Experiencia</div>
+      <section class="sec">
+        <div class="sec-title">Experiencia</div>
 
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-title">Project Leader &amp; Full Stack Developer</span>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">Project Leader &amp; Full Stack Developer</span>
             <span class="exp-date">Jul 2025 – Presente</span>
           </div>
-          <div class="exp-company">ZOONI <span class="badge">Internship</span> <span class="badge">Híbrido</span></div>
-          <ul class="exp-bullets">
+          <div class="exp-co">ZOONI <span class="badge">Internship</span><span class="badge">Híbrido · Argentina</span></div>
+          <ul class="exp-list">
             <li>Lideré el equipo completo: asigné roles, coordiné sprints y tomé decisiones de arquitectura.</li>
             <li>Construí frontend y backend con C#, JavaScript y CSS bajo arquitectura MVC desde cero.</li>
             <li>Gestioné contacto con inversores y llevé el proyecto hacia validación real.</li>
@@ -469,92 +349,82 @@
           </ul>
         </div>
 
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-title">Automation &amp; Data Management Developer</span>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">Automation &amp; Data Management Developer</span>
             <span class="exp-date">Dic 2025 – Mar 2026</span>
           </div>
-          <div class="exp-company">PROMED INT. <span class="badge">Temporal</span> <span class="badge">Remoto</span></div>
-          <ul class="exp-bullets">
-            <li>Automatización e IA para empresa con +$1M de facturación anual.</li>
+          <div class="exp-co">PROMED INT. <span class="badge">Temporal</span><span class="badge">Remoto · Buenos Aires</span></div>
+          <ul class="exp-list">
+            <li>Automatización e IA para empresa con <strong>+$1M de facturación anual</strong>.</li>
             <li>Propuse mejoras adoptadas a nivel organizacional (recomendado por la VP).</li>
             <li>Organicé y estructuré datos internos mejorando la eficiencia operativa.</li>
           </ul>
         </div>
 
-        <div class="exp-item">
-          <div class="exp-header">
-            <span class="exp-title">Software Engineer</span>
+        <div class="exp">
+          <div class="exp-top">
+            <span class="exp-role">Software Engineer</span>
             <span class="exp-date">Oct 2023 – Ago 2025</span>
           </div>
-          <div class="exp-company">EBTOOLS <span class="badge">Part-time</span> <span class="badge">Híbrido</span></div>
-          <ul class="exp-bullets">
-            <li>Software para empresa MercadoLíder con +10.000 productos vendidos.</li>
+          <div class="exp-co">EBTOOLS <span class="badge">Part-time</span><span class="badge">Híbrido · Buenos Aires</span></div>
+          <ul class="exp-list">
+            <li>Software para empresa MercadoLíder con <strong>+10.000 productos vendidos</strong>.</li>
             <li>Stack: .NET Core · mejoras de UX y procesos internos.</li>
           </ul>
         </div>
       </section>
 
-      <!-- Proyectos -->
-      <section class="section">
-        <div class="section-title">Proyectos</div>
-        <div class="projects-grid">
+      <section class="sec">
+        <div class="sec-title">Proyectos</div>
+        <div class="proj-grid">
 
-          <div class="project-card">
-            <div class="project-name">PROMPTOOL</div>
-            <div class="project-role">CEO &amp; Co-Founder · Team Lead</div>
-            <div class="project-desc">Juego diario tipo Wordle para entrenar prompts de IA. Evaluación automática con Gemini. Modelo B2B/B2C.</div>
-            <div class="project-tags">
-              <span class="tag">React</span>
-              <span class="tag">Vite</span>
-              <span class="tag">TailwindCSS</span>
-              <span class="tag">Gemini API</span>
+          <div class="proj">
+            <div class="proj-name">PROMPTOOL</div>
+            <div class="proj-role">CEO &amp; Co-Founder · Team Lead</div>
+            <div class="proj-desc">Juego diario tipo Wordle para entrenar prompts de IA. Evaluación automática con Gemini. Modelo B2B/B2C.</div>
+            <div class="proj-tags">
+              <span class="tag">React</span><span class="tag">Vite</span>
+              <span class="tag">TailwindCSS</span><span class="tag">Gemini API</span>
             </div>
           </div>
 
-          <div class="project-card">
-            <div class="project-name">ZOONI</div>
-            <div class="project-role">Project Leader &amp; Full Stack</div>
-            <div class="project-desc">Plataforma de cuidado de mascotas. Startup académica con contacto a inversores reales.</div>
-            <div class="project-tags">
-              <span class="tag">C#</span>
-              <span class="tag">ASP.NET MVC</span>
-              <span class="tag">JavaScript</span>
+          <div class="proj">
+            <div class="proj-name">ZOONI</div>
+            <div class="proj-role">Project Leader &amp; Full Stack</div>
+            <div class="proj-desc">Plataforma de cuidado de mascotas. Startup académica con contacto a inversores reales.</div>
+            <div class="proj-tags">
+              <span class="tag">C#</span><span class="tag">ASP.NET MVC</span><span class="tag">JavaScript</span>
             </div>
           </div>
 
-          <div class="project-card">
-            <div class="project-name">KUSOCIETY</div>
-            <div class="project-role">&nbsp;</div>
-            <div class="project-desc">God simulator con agentes autónomos, roles dinámicos y evolución poblacional en tiempo real.</div>
-            <div class="project-tags">
-              <span class="tag">JavaScript</span>
-            </div>
+          <div class="proj">
+            <div class="proj-name">KUSOCIETY</div>
+            <div class="proj-role">&nbsp;</div>
+            <div class="proj-desc">God simulator con agentes autónomos, roles dinámicos y evolución poblacional en tiempo real.</div>
+            <div class="proj-tags"><span class="tag">JavaScript</span></div>
           </div>
 
-          <div class="project-card">
-            <div class="project-name">Rick &amp; Morty Escape Room</div>
-            <div class="project-role">&nbsp;</div>
-            <div class="project-desc">Escape room full stack con efectos sonoros y decisiones emocionales. 6 ⭐ GitHub.</div>
-            <div class="project-tags">
-              <span class="tag">C#</span>
-              <span class="tag">ASP.NET MVC</span>
-              <span class="tag">JavaScript</span>
+          <div class="proj">
+            <div class="proj-name">ESCAPE-C137</div>
+            <div class="proj-role">&nbsp;</div>
+            <div class="proj-desc">Escape room full stack inspirado en Rick &amp; Morty. Efectos sonoros y decisiones emocionales. 6 ⭐</div>
+            <div class="proj-tags">
+              <span class="tag">C#</span><span class="tag">ASP.NET MVC</span><span class="tag">JavaScript</span>
             </div>
           </div>
 
         </div>
       </section>
 
-      <!-- Educación -->
-      <section class="section">
-        <div class="section-title">Educación</div>
-        <div class="edu-item">
-          <img src="logo-escuelaort.png" alt="Escuela ORT" class="edu-logo">
+      <section class="sec">
+        <div class="sec-title">Educación</div>
+        <div class="edu">
+          <img src="logo-escuelaort.png" alt="ORT" class="edu-logo">
           <div>
             <div class="edu-school">Escuela Técnica ORT</div>
-            <div class="edu-degree">Bachiller Técnico en Informática</div>
-            <div class="edu-years">Mar 2022 – Dic 2026</div>
+            <div class="edu-deg">Bachiller Técnico en Informática</div>
+            <div class="edu-yr">Mar 2022 – Dic 2026 · Buenos Aires</div>
             <div class="edu-note">Especialización en desarrollo web, liderazgo de equipos y proyectos con impacto real.</div>
           </div>
         </div>
@@ -562,77 +432,65 @@
 
     </main>
 
-    <!-- Sidebar -->
-    <aside class="cv-sidebar">
+    <!-- SIDEBAR -->
+    <aside class="cv-side">
 
-      <!-- Liderazgo -->
-      <div class="sidebar-section">
-        <div class="sidebar-title">Liderazgo</div>
+      <div class="side-sec">
+        <div class="side-title">Liderazgo</div>
         <ul class="skill-list">
-          <li class="highlight">Gestión de proyectos</li>
-          <li class="highlight">Liderazgo de equipos</li>
-          <li class="highlight">Coordinación de sprints</li>
+          <li class="hi">Gestión de proyectos</li>
+          <li class="hi">Liderazgo de equipos</li>
+          <li class="hi">Coordinación de sprints</li>
           <li>Toma de decisiones técnicas</li>
           <li>Emprendimiento</li>
+          <li>Contacto con inversores</li>
         </ul>
       </div>
 
-      <!-- Tecnologías -->
-      <div class="sidebar-section">
-        <div class="sidebar-title">Tecnologías</div>
-        <div class="tech-group">
-          <div class="tech-line"><strong>JavaScript</strong> · React · Vite</div>
-          <div class="tech-line"><strong>C#</strong> · ASP.NET MVC · .NET Core</div>
-          <div class="tech-line"><strong>HTML5</strong> · CSS3 · TailwindCSS</div>
-          <div class="tech-line"><strong>SQL</strong> · REST APIs · Git</div>
-          <div class="tech-line"><strong>Google Gemini API</strong></div>
-          <div class="tech-line">Automatización con IA</div>
+      <div class="side-sec">
+        <div class="side-title">Tecnologías</div>
+        <div class="tech-line"><strong>JavaScript</strong> · React · Vite</div>
+        <div class="tech-line"><strong>C#</strong> · ASP.NET MVC · .NET Core</div>
+        <div class="tech-line"><strong>HTML5</strong> · CSS3 · TailwindCSS</div>
+        <div class="tech-line"><strong>SQL</strong> · REST APIs · Git</div>
+        <div class="tech-line"><strong>Google Gemini API</strong></div>
+        <div class="tech-line">Automatización con IA</div>
+      </div>
+
+      <div class="side-sec">
+        <div class="side-title">Idiomas</div>
+        <div class="lang">
+          <div class="lang-hd"><span class="lang-name">Español</span><span class="lang-lv">Nativo · C2</span></div>
+          <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+        </div>
+        <div class="lang">
+          <div class="lang-hd"><span class="lang-name">Inglés</span><span class="lang-lv">CAE · C1</span></div>
+          <div class="lang-bar"><div class="lang-fill" style="width:88%"></div></div>
+        </div>
+        <div class="lang">
+          <div class="lang-hd"><span class="lang-name">Portugués</span><span class="lang-lv">Conversacional · B1</span></div>
+          <div class="lang-bar"><div class="lang-fill" style="width:45%"></div></div>
+        </div>
+        <div class="lang">
+          <div class="lang-hd"><span class="lang-name">Hebreo</span><span class="lang-lv">Lectura · A1</span></div>
+          <div class="lang-bar"><div class="lang-fill" style="width:15%"></div></div>
         </div>
       </div>
 
-      <!-- Idiomas -->
-      <div class="sidebar-section">
-        <div class="sidebar-title">Idiomas</div>
-
-        <div class="lang-item">
-          <div class="lang-header">
-            <span class="lang-name">Español</span>
-            <span class="lang-level">Nativo · C2</span>
-          </div>
-          <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      <div class="side-sec">
+        <div class="side-title">Links</div>
+        <div style="font-size:.68rem;color:#3a3a5a;line-height:1.8">
+          <div><a href="https://github.com/theotrosman" style="color:var(--blue);text-decoration:none">github.com/theotrosman</a></div>
+          <div><a href="https://linkedin.com/in/theotrosman" style="color:var(--blue);text-decoration:none">linkedin.com/in/theotrosman</a></div>
+          <div style="color:var(--muted)">theotrosman@gmail.com</div>
         </div>
-
-        <div class="lang-item">
-          <div class="lang-header">
-            <span class="lang-name">Inglés</span>
-            <span class="lang-level">CAE · C1</span>
-          </div>
-          <div class="lang-bar"><div class="lang-fill" style="width:88%"></div></div>
-        </div>
-
-        <div class="lang-item">
-          <div class="lang-header">
-            <span class="lang-name">Portugués</span>
-            <span class="lang-level">Conversacional · B1</span>
-          </div>
-          <div class="lang-bar"><div class="lang-fill" style="width:45%"></div></div>
-        </div>
-
-        <div class="lang-item">
-          <div class="lang-header">
-            <span class="lang-name">Hebreo</span>
-            <span class="lang-level">Lectura básica · A1</span>
-          </div>
-          <div class="lang-bar"><div class="lang-fill" style="width:15%"></div></div>
-        </div>
-
       </div>
 
     </aside>
-  </div><!-- /cv-body -->
+  </div>
 
-</div><!-- /cv -->
-</div><!-- /page-wrap -->
+</div>
+</div>
 
 </body>
 </html>

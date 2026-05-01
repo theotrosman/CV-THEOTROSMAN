@@ -43,38 +43,11 @@
     #cursor, #cursor-ring { display: none; }
 
     @media (pointer: fine) {
-      #cursor {
-        display: block;
-        position: fixed;
-        width: 10px; height: 10px;
-        background: var(--primary);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
-        mix-blend-mode: multiply;
-        opacity: 0;
+      body.cursor-active,
+      body.cursor-active a,
+      body.cursor-active button {
+        cursor: url('windows-cursor-vector.png') 0 0, auto;
       }
-      #cursor-ring {
-        display: block;
-        position: fixed;
-        width: 36px; height: 36px;
-        border: 1.5px solid rgba(26, 63, 204, 0.4);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9998;
-        transform: translate(-50%, -50%);
-        transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
-        opacity: 0;
-      }
-      body.cursor-active { cursor: none; }
-      body.cursor-active a, body.cursor-active button { cursor: none; }
-      body.cursor-active #cursor, body.cursor-active #cursor-ring { opacity: 1; }
-      body.cursor-active:has(a:hover) #cursor,
-      body.cursor-active:has(button:hover) #cursor { width: 16px; height: 16px; background: var(--violet); }
-      body.cursor-active:has(a:hover) #cursor-ring,
-      body.cursor-active:has(button:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(124, 58, 237, 0.4); }
     }
 
     /* ── Floating Shapes ── */
@@ -972,44 +945,11 @@
   </footer>
 
   <script>
-    // ── Custom Cursor (mouse devices only) ──
+    // ── Custom Cursor (image) ──
     if (window.matchMedia('(pointer: fine)').matches) {
-      const cursor = document.getElementById('cursor');
-      const ring = document.getElementById('cursor-ring');
-      let mouseX = 0, mouseY = 0;
-      let ringX = 0, ringY = 0;
-      let cursorActive = false;
-
-      document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-        if (!cursorActive) {
-          cursorActive = true;
-          document.body.classList.add('cursor-active');
-        }
-      });
-
-      function animateRing() {
-        ringX += (mouseX - ringX) * 0.12;
-        ringY += (mouseY - ringY) * 0.12;
-        ring.style.left = ringX + 'px';
-        ring.style.top = ringY + 'px';
-        requestAnimationFrame(animateRing);
-      }
-      animateRing();
-
-      document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-        ring.style.opacity = '0';
-      });
-      document.addEventListener('mouseenter', () => {
-        if (cursorActive) {
-          cursor.style.opacity = '1';
-          ring.style.opacity = '1';
-        }
-      });
+      document.addEventListener('mousemove', () => {
+        document.body.classList.add('cursor-active');
+      }, { once: true });
     }
 
     // ── Hamburger Menu ──

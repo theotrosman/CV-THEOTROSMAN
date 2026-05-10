@@ -5,8 +5,6 @@
 Modern and interactive developer CV built to stand out.  
 Focused on clean UI, smooth animations, performance and personality.
 
-<img src="./preview.png" width="100%" />
-
 </div>
 
 ---
